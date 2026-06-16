@@ -4,322 +4,246 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LocalSITEC - Expertos en Energía</title>
-    <!-- Fuentes e Iconos esenciales de UI -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
     
     <style>
-        /* PALETA CYBER-LUX PREMIUM */
         :root {
-            --bg-principal: #080d16;
-            --bg-tarjeta: #111a2e;
-            --bg-input: #1b2947;
-            --cian: #00f5ff;
-            --texto-blanco: #f8fafc;
-            --texto-mutado: #64748b;
+            --bg-principal: #0b0c0e;       
+            --bg-tarjeta: #141619;         
+            --bg-input: #1c1f24;           
+            --oro-premium: #e2b842;        
+            --texto-blanco: #f4f5f6;       
+            --texto-mutado: #8a8f98;       
             --verde-wa: #22c55e;
-            --borde: rgba(255, 255, 255, 0.05);
-            --borde-activo: rgba(0, 245, 255, 0.3);
+            --rojo-eliminar: #ef4444;
+            --azul-editar: #3b82f6;
+            --borde: rgba(255, 255, 255, 0.04);
+            --borde-activo: rgba(226, 184, 66, 0.3);
+            --fx-sombra: 0 20px 50px -12px rgba(0, 0, 0, 0.9);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-principal); color: var(--texto-blanco); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 8px; }
+        
+        .contenedor-app { width: 100%; max-width: 480px; background-color: var(--bg-principal); border: 1px solid var(--borde); border-radius: 24px; overflow: hidden; box-shadow: var(--fx-sombra); display: flex; flex-direction: column; }
+        @media (min-width: 768px) { body { padding: 32px; } }
 
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto-blanco);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 8px;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 18px; border-bottom: 1px solid var(--borde); background: rgba(20, 22, 25, 0.7); backdrop-filter: blur(12px); z-index: 10; }
+        .marca-info h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
+        .marca-info p { font-size: 0.65rem; color: var(--oro-premium); letter-spacing: 2px; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
 
-        .contenedor-app {
-            width: 100%;
-            max-width: 480px;
-            background-color: var(--bg-principal);
-            border: 1px solid var(--borde);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-        }
+        .btn-wa-directo { background-color: rgba(255, 255, 255, 0.03); color: var(--texto-blanco); border: 1px solid var(--borde); padding: 9px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; }
+        .btn-wa-directo:hover { background-color: var(--bg-input); color: var(--verde-wa); border-color: rgba(34, 197, 94, 0.3); }
 
-        @media (min-width: 768px) {
-            body { padding: 24px; }
-        }
+        .indicador-pasos { display: flex; justify-content: space-between; margin: 20px 18px 14px 18px; position: relative; }
+        .indicador-pasos::before { content: ''; position: absolute; background: var(--borde); height: 1px; width: 100%; top: 50%; transform: translateY(-50%); z-index: 1; }
+        .paso-circulo { width: 28px; height: 28px; background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: var(--texto-mutado); z-index: 2; transition: all 0.3s ease; }
+        .paso-circulo.activo { background-color: var(--bg-principal); border-color: var(--oro-premium); color: var(--oro-premium); box-shadow: 0 0 15px rgba(222, 184, 66, 0.15); }
 
-        /* Header translúcido */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid var(--borde);
-            background: rgba(17, 26, 46, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 10;
-        }
+        .asistente-caja { background-color: var(--bg-tarjeta); border-radius: 20px; padding: 20px; margin: 0 12px 16px 12px; border: 1px solid var(--borde); }
+        .asistente-caja h3 { font-size: 1.15rem; margin-bottom: 6px; font-weight: 600; letter-spacing: -0.2px; }
+        .asistente-caja .subtitulo { font-size: 0.8rem; color: var(--texto-mutado); margin-bottom: 18px; line-height: 1.4; }
 
-        .marca-info h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; color: #fff; }
-        .marca-info p { font-size: 0.65rem; color: var(--cian); letter-spacing: 1.5px; font-weight: 700; }
-
-        .btn-wa-directo {
-            background-color: rgba(34, 197, 94, 0.1);
-            color: var(--verde-wa);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: 0.2s;
-        }
-        .btn-wa-directo:hover { background-color: rgba(34, 197, 94, 0.2); }
-
-        /* Indicador de pasos */
-        .indicador-pasos {
-            display: flex;
-            justify-content: space-between;
-            margin: 16px;
-            position: relative;
-        }
-
-        .indicador-pasos::before {
-            content: ''; position: absolute; background: var(--borde); height: 2px; width: 100%; top: 50%; transform: translateY(-50%); z-index: 1;
-        }
-
-        .paso-circulo {
-            width: 30px; height: 30px; background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--texto-mutado); z-index: 2; transition: 0.3s;
-        }
-
-        .paso-circulo.activo {
-            background-color: var(--bg-principal); border-color: var(--cian); color: var(--cian); box-shadow: 0 0 12px var(--borde-activo);
-        }
-
-        /* Cajas de interacción */
-        .asistente-caja {
-            background-color: var(--bg-tarjeta); border-radius: 16px; padding: 18px; margin: 0 10px 16px 10px; border: 1px solid var(--borde);
-        }
-
-        .asistente-caja h3 { font-size: 1.15rem; margin-bottom: 4px; font-weight: 600; }
-        .asistente-caja .subtitulo { font-size: 0.8rem; color: var(--texto-mutado); margin-bottom: 16px; }
-
-        /* Grid de tarjetas modificado para imágenes */
         .opciones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .opcion-card { background-color: var(--bg-input); border: 1px solid var(--borde); border-radius: 16px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .opcion-card:hover { border-color: var(--borde-activo); background-color: #21252a; }
+        .opcion-img-wrapper { width: 100%; height: 105px; overflow: hidden; background-color: #0c1220; position: relative; }
+        .opcion-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) brightness(0.8) contrast(1.05); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .opcion-card:hover img { transform: scale(1.04); filter: grayscale(0%) brightness(0.9); }
+        .opcion-card span { padding: 12px 8px; font-size: 0.85rem; font-weight: 500; text-align: center; display: block; color: var(--texto-blanco); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .opcion-card {
-            background-color: var(--bg-input); border: 1px solid transparent; border-radius: 14px; 
-            overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: 0.2s;
-            position: relative;
-        }
+        .alerta-stock { background-color: rgba(226, 184, 66, 0.03); border: 1px solid rgba(226, 184, 66, 0.15); padding: 9px; border-radius: 10px; color: var(--oro-premium); font-size: 0.75rem; font-weight: 600; text-align: center; }
+        .precio-tag { font-size: 2.4rem; font-weight: 700; text-align: center; margin: 8px 0; color: #fff; }
 
-        .opcion-card:hover { border-color: var(--borde-activo); background-color: rgba(27, 41, 71, 0.9); }
-        .opcion-card:active { transform: scale(0.97); }
+        .btn-whatsapp { background-color: var(--texto-blanco); color: var(--bg-principal); border: none; padding: 15px; border-radius: 14px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; text-decoration: none; }
+        .btn-whatsapp:hover { background-color: var(--oro-premium); transform: translateY(-1px); }
+        .btn-regresar { background: transparent; color: var(--texto-mutado); border: 1px solid var(--borde); padding: 11px; border-radius: 14px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 0.8rem; }
 
-        /* Estilos de la imagen premium dentro de la tarjeta */
-        .opcion-img-wrapper {
-            width: 100%; height: 100px; overflow: hidden; background-color: #0c1220; position: relative;
-        }
-
-        .opcion-card img {
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: brightness(0.85) contrast(1.1);
-            transition: transform 0.3s ease;
-        }
-
-        .opcion-card:hover img {
-            transform: scale(1.06);
-            filter: brightness(0.95);
-        }
-
-        .opcion-card span {
-            padding: 10px 8px; font-size: 0.85rem; font-weight: 600; text-align: center;
-            display: block; color: var(--texto-blanco); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-
-        /* Seccion Adicional */
-        .seccion-adicional {
-            background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--borde); border-radius: 12px; padding: 12px; margin: 12px 0;
-            display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s;
-        }
-        .seccion-adicional:hover { border-color: var(--borde-activo); }
-
-        .adicional-info { display: flex; align-items: center; gap: 10px; text-align: left; }
-        .adicional-info span { font-size: 0.85rem; font-weight: 500; }
-        .adicional-info p { font-size: 0.75rem; color: var(--texto-mutado); }
+        /* Estilos Avanzados del Panel de Administración */
+        .admin-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .admin-form label { font-size: 0.7rem; color: var(--texto-mutado); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: block;}
+        .admin-input, .admin-select { background-color: var(--bg-input); border: 1px solid var(--borde); padding: 12px; border-radius: 10px; color: var(--texto-blanco); font-size: 0.85rem; width: 100%; outline: none; }
+        .admin-input:focus, .admin-select:focus { border-color: var(--oro-premium); }
         
-        .checkbox-personalizado {
-            width: 20px; height: 20px; border: 1px solid var(--texto-mutado); border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; color: transparent; transition: 0.2s;
-        }
-
-        .seccion-adicional.activo .checkbox-personalizado {
-            background-color: var(--cian); border-color: var(--cian); color: var(--bg-principal);
-        }
-
-        /* Alertas y Precio */
-        .alerta-stock { background-color: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.15); padding: 8px; border-radius: 8px; color: var(--cian); font-size: 0.75rem; font-weight: 600; text-align: center; letter-spacing: 0.5px; }
-        .precio-tag { font-size: 2.2rem; font-weight: 700; text-align: center; margin: 6px 0; color: #fff; text-shadow: 0 0 15px rgba(0,245,255,0.2); }
-
-        /* Botones */
-        .btn-whatsapp {
-            background-color: var(--verde-wa); color: white; border: none; padding: 14px; border-radius: 12px;
-            font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; text-decoration: none; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2); transition: 0.2s;
-        }
-        .btn-whatsapp:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3); }
+        .btn-admin-guardar { background-color: var(--oro-premium); color: var(--bg-principal); border: none; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s; }
+        .btn-admin-cancelar { background-color: #21252a; color: var(--texto-blanco); border: 1px solid var(--borde); padding: 10px; border-radius: 10px; font-size: 0.8rem; cursor: pointer; width: 100%; margin-top: 5px; }
         
-        .btn-regresar { background: transparent; color: var(--texto-mutado); border: 1px solid var(--borde); padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.8rem; transition: 0.2s; }
-        .btn-regresar:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+        .lista-admin-scroll { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .item-admin-card { background: var(--bg-input); border: 1px solid var(--borde); padding: 12px; border-radius: 14px; display: flex; gap: 12px; align-items: center; }
+        .item-admin-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--borde); }
+        .item-admin-info { flex: 1; min-width: 0; }
+        .item-admin-info strong { font-size: 0.85rem; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .item-admin-info p { font-size: 0.75rem; color: var(--texto-mutado); margin-top: 2px; }
+        
+        .admin-acciones-btn { display: flex; gap: 8px; }
+        .btn-action { background: rgba(255,255,255,0.03); border: 1px solid var(--borde); padding: 8px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-action.edit { color: var(--azul-editar); }
+        .btn-action.delete { color: var(--rojo-eliminar); }
+        .btn-action:hover { background: var(--bg-tarjeta); }
 
-        /* Catálogo Inferior */
-        .seccion-catalogo-discreto {
-            border-top: 1px solid var(--borde); padding: 14px; text-align: center; background: rgba(11, 17, 30, 0.6);
-        }
-
-        .btn-toggle-catalogo {
-            background: transparent; border: none; color: var(--texto-mutado); font-size: 0.8rem; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 6px; font-weight: 500; transition: 0.2s;
-        }
-        .btn-toggle-catalogo:hover { color: var(--cian); }
-
-        .lista-catalogo {
-            max-height: 220px; overflow-y: auto; margin-top: 12px; text-align: left; display: flex; flex-direction: column; gap: 6px; padding-right: 2px;
-        }
-        .lista-catalogo::-webkit-scrollbar { width: 4px; }
-        .lista-catalogo::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 10px; }
-
-        .item-catalogo {
-            background: var(--bg-tarjeta); border: 1px solid var(--borde); padding: 10px; border-radius: 10px;
-            display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;
-        }
-        .item-catalogo .item-detalles p { font-size: 0.7rem; color: var(--texto-mutado); margin-top: 2px; }
-        .item-catalogo .item-precio { font-weight: 600; color: var(--cian); }
-
+        .seccion-catalogo-discreto { border-top: 1px solid var(--borde); padding: 16px; text-align: center; background: rgba(11, 12, 14, 0.5); }
+        .btn-toggle-catalogo { background: transparent; border: none; color: var(--texto-mutado); font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .lista-catalogo { max-height: 220px; overflow-y: auto; margin-top: 14px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+        .item-catalogo { background: var(--bg-tarjeta); border: 1px solid var(--borde); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+        
+        .loading-screen { text-align: center; padding: 50px; color: var(--oro-premium); font-weight: 500; font-size: 0.9rem; }
         .oculto { display: none !important; }
     </style>
 </head>
 <body>
 
 <div class="contenedor-app">
-    <!-- Header -->
-    <header class="header">
-        <div class="marca-info">
-            <h1>LocalSITEC</h1>
-            <p>POWER EXPERTS</p>
-        </div>
-        <button class="btn-wa-directo" onclick="abrirWaDirecto()">
-            <span class="material-symbols-outlined" style="font-size: 18px;">chat</span>
-        </button>
-    </header>
+    <div id="pantalla-carga" class="loading-screen">
+        <span class="material-symbols-outlined" style="font-size: 30px; animation: spin 1.5s linear infinite; margin-bottom: 10px; display:inline-block;">sync</span>
+        <p>Sincronizando con Google Cloud...</p>
+    </div>
 
-    <!-- Cuerpo del Asistente -->
-    <main style="flex: 1;">
-        <div class="indicador-pasos">
-            <div class="paso-circulo" id="circulo-1">1</div>
-            <div class="paso-circulo" id="circulo-2">2</div>
-            <div class="paso-circulo" id="circulo-3">3</div>
-            <div class="paso-circulo" id="circulo-4">4</div>
-        </div>
-
-        <!-- Paso 1: Marcas con Fotos -->
-        <div id="paso-1" class="asistente-caja">
-            <h3>¿Qué marca es tu equipo?</h3>
-            <p class="subtitulo">Selecciona el fabricante para filtrar compatibles.</p>
-            <div class="opciones-grid" id="grid-marcas"></div>
-        </div>
-
-        <!-- Paso 2: Categorías Expandidas con Fotos -->
-        <div id="paso-2" class="asistente-caja oculto">
-            <h3>¿Qué componente buscas?</h3>
-            <p class="subtitulo">Selecciona la línea de repuesto requerida.</p>
-            <div class="opciones-grid">
-                <div class="opcion-card" onclick="seleccionarCategoria('Cargador')">
-                    <div class="opcion-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400&auto=format&fit=crop&q=60" alt="Cargador">
-                    </div>
-                    <span>Cargador</span>
-                </div>
-                <div class="opcion-card" onclick="seleccionarCategoria('Batería')">
-                    <div class="opcion-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1620283085439-39620a1e21c4?w=400&auto=format&fit=crop&q=60" alt="Batería">
-                    </div>
-                    <span>Batería</span>
-                </div>
-                <div class="opcion-card" onclick="seleccionarCategoria('Teclado')">
-                    <div class="opcion-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&auto=format&fit=crop&q=60" alt="Teclado">
-                    </div>
-                    <span>Teclado</span>
-                </div>
-                <div class="opcion-card" onclick="seleccionarCategoria('Otros Accesorios')">
-                    <div class="opcion-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1563770660941-20978e870e26?w=400&auto=format&fit=crop&q=60" alt="Accesorios">
-                    </div>
-                    <span>Otros Accesorios</span>
-                </div>
+    <div id="vista-tienda" class="oculto">
+        <header class="header">
+            <div class="marca-info">
+                <h1>LocalSITEC</h1>
+                <p>Power Experts</p>
             </div>
-            <button class="btn-regresar" onclick="retrocederPaso(1)">Volver</button>
-        </div>
+            <button class="btn-wa-directo" onclick="abrirWaDirecto()">
+                <span class="material-symbols-outlined" style="font-size: 18px;">chat</span>
+            </button>
+        </header>
 
-        <!-- Paso 3: Especificaciones Técnicas con Fotos Genéricas de Hardware -->
-        <div id="paso-3" class="asistente-caja oculto">
-            <h3>Variantes de Hardware</h3>
-            <p class="subtitulo">Selecciona el modelo o especificación técnica exacta.</p>
-            <div class="opciones-grid" id="grid-especificaciones"></div>
-            <button class="btn-regresar" onclick="retrocederPaso(2)">Volver</button>
-        </div>
+        <main style="flex: 1;">
+            <div class="indicador-pasos">
+                <div class="paso-circulo" id="circulo-1">1</div>
+                <div class="paso-circulo" id="circulo-2">2</div>
+                <div class="paso-circulo" id="circulo-3">3</div>
+                <div class="paso-circulo" id="circulo-4">4</div>
+            </div>
 
-        <!-- Paso 4: Cierre de Orden -->
-        <div id="paso-4" class="asistente-caja oculto">
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <h3 id="resultado-titulo" style="text-align: center;"></h3>
-                <div id="resultado-status"></div>
-                <p id="resultado-descripcion" style="color: var(--texto-mutado); font-size: 0.8rem; text-align: center;"></p>
-                
-                <!-- Accesorio Opcional -->
-                <div id="contenedor-adicional" class="seccion-adicional oculto" onclick="toggleAccesorio()">
-                    <div class="adicional-info">
-                        <span class="material-symbols-outlined" style="color: var(--cian); font-size: 20px;">add_circle</span>
-                        <div>
-                            <span id="txt-acc-nombre">¿Añadir Regulador?</span>
-                            <p id="txt-acc-precio">+ $10.00</p>
-                        </div>
+            <div id="paso-1" class="asistente-caja">
+                <h3>¿Qué marca es tu equipo?</h3>
+                <p class="subtitulo">Selecciona el fabricante para filtrar compatibles.</p>
+                <div class="opciones-grid" id="grid-marcas"></div>
+            </div>
+
+            <div id="paso-2" class="asistente-caja oculto">
+                <h3>¿Qué componente buscas?</h3>
+                <p class="subtitulo">Selecciona la línea de repuesto requerida.</p>
+                <div class="opciones-grid">
+                    <div class="opcion-card" onclick="seleccionarCategoria('Cargador')">
+                        <div class="opcion-img-wrapper"><img id="img-cat-cargador" src=""></div><span>Cargador</span>
                     </div>
-                    <div class="checkbox-personalizado" id="check-icono">
-                        <span class="material-symbols-outlined" style="font-size: 14px;">check</span>
+                    <div class="opcion-card" onclick="seleccionarCategoria('Batería')">
+                        <div class="opcion-img-wrapper"><img id="img-cat-bateria" src=""></div><span>Batería</span>
+                    </div>
+                    <div class="opcion-card" onclick="seleccionarCategoria('Teclado')">
+                        <div class="opcion-img-wrapper"><img id="img-cat-teclado" src=""></div><span>Teclado</span>
+                    </div>
+                    <div class="opcion-card" onclick="seleccionarCategoria('Otros Accesorios')">
+                        <div class="opcion-img-wrapper"><img id="img-cat-otros" src=""></div><span>Otros Accesorios</span>
+                    </div>
+                </div>
+                <button class="btn-regresar" onclick="retrocederPaso(1)">Volver</button>
+            </div>
+
+            <div id="paso-3" class="asistente-caja oculto">
+                <h3>Variantes de Hardware</h3>
+                <p class="subtitulo">Selecciona el modelo o especificación técnica exacta.</p>
+                <div class="opciones-grid" id="grid-especificaciones"></div>
+                <button class="btn-regresar" onclick="retrocederPaso(2)">Volver</button>
+            </div>
+
+            <div id="paso-4" class="asistente-caja oculto">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <h3 id="resultado-titulo" style="text-align: center;"></h3>
+                    <div id="resultado-status"></div>
+                    <p id="resultado-descripcion" style="color: var(--texto-mutado); font-size: 0.8rem; text-align: center; line-height: 1.4;"></p>
+                    <div id="resultado-precio" class="precio-tag"></div>
+                    <a id="btn-enviar-wa" href="#" target="_blank" class="btn-whatsapp">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">send</span> Enviar orden de compra
+                    </a>
+                </div>
+                <button class="btn-regresar" onclick="reiniciarAsistente()">Nueva Consulta</button>
+            </div>
+        </main>
+
+        <footer class="seccion-catalogo-discreto">
+            <button class="btn-toggle-catalogo" onclick="toggleCatalogoVisual()">
+                <span class="material-symbols-outlined" id="icono-catalogo">expand_more</span>
+                <span>Ver Catálogo Compartido</span>
+            </button>
+            <div id="lista-catalogo-id" class="lista-catalogo oculto"></div>
+        </footer>
+    </div>
+
+    <div id="vista-admin" class="oculto">
+        <header class="header">
+            <div class="marca-info">
+                <h1 id="admin-panel-title">Nuevo Producto</h1>
+                <p style="color: var(--oro-premium);" id="admin-panel-subtitle">Añadir a Google Sheets</p>
+            </div>
+            <button class="btn-wa-directo" onclick="window.location.hash = ''">
+                <span class="material-symbols-outlined" style="color: var(--oro-premium);">store</span>
+            </button>
+        </header>
+        
+        <div class="asistente-caja" style="margin-top: 15px;">
+            <div class="admin-form">
+                <input type="hidden" id="edit-id" value="">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label>Fabricante</label>
+                        <select id="add-marca" class="admin-select">
+                            <option value="HP">HP</option><option value="Dell">Dell</option><option value="Lenovo">Lenovo</option>
+                            <option value="ASUS">ASUS</option><option value="Acer">Acer</option><option value="Apple">Apple</option>
+                            <option value="Toshiba">Toshiba</option><option value="Samsung">Samsung</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Categoría</label>
+                        <select id="add-categoria" class="admin-select">
+                            <option value="Cargador">Cargador</option><option value="Batería">Batería</option>
+                            <option value="Teclado">Teclado</option><option value="Otros Accesorios">Otros Accesorios</option>
+                        </select>
                     </div>
                 </div>
 
-                <div id="resultado-precio" class="precio-tag"></div>
-                
-                <a id="btn-enviar-wa" href="#" target="_blank" class="btn-whatsapp">
-                    <span class="material-symbols-outlined">send</span> Enviar orden de compra
-                </a>
-            </div>
-            <button class="btn-regresar" onclick="reiniciarAsistente()">Nueva Consulta</button>
-        </div>
-    </main>
+                <div>
+                    <label>Modelo / Especificación Exacta</label>
+                    <input type="text" id="add-spec" class="admin-input" placeholder="Ej: Punta Azul 19.5V 3.33A">
+                </div>
 
-    <!-- Catálogo Inferior Desplegable -->
-    <footer class="seccion-catalogo-discreto">
-        <button class="btn-toggle-catalogo" onclick="toggleCatalogoVisual()">
-            <span class="material-symbols-outlined" id="icono-catalogo">expand_more</span>
-            <span>Ver Catálogo Completo (+100 Ítems)</span>
-        </button>
-        <div id="lista-catalogo-id" class="lista-catalogo oculto"></div>
-    </footer>
+                <div>
+                    <label>URL de la Imagen (Link de internet)</label>
+                    <input type="text" id="add-imgurl" class="admin-input" placeholder="https://ejemplo.com/foto.jpg">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label>Precio ($ USD)</label>
+                        <input type="number" id="add-precio" class="admin-input" placeholder="25">
+                    </div>
+                    <div>
+                        <label>Stock Disponible</label>
+                        <input type="number" id="add-stock" class="admin-input" placeholder="10">
+                    </div>
+                </div>
+
+                <button class="btn-admin-guardar" id="btn-save-text" onclick="guardarProductoAdmin()">Guardar en la Nube</button>
+                <button class="btn-admin-cancelar oculto" id="btn-cancelar-edicion" onclick="cancelarEdicion()">Cancelar Edición</button>
+            </div>
+        </div>
+
+        <div class="asistente-caja">
+            <h3>Inventario en Vivo</h3>
+            <p class="subtitulo" style="margin-bottom:10px;">Pulsa el ícono azul para modificar todo el producto.</p>
+            <div class="lista-admin-scroll" id="lista-admin-items"></div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Configuración Base de Datos e Imágenes de Marcas (Unsplash Tecnológico)
+    // URL DE TU CARTERO GOOGLE SCRIPT INYECTADA CORRECTAMENTE:
+    const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbzw7Q5KCqHa7VCt6AdxsqkXQt5jktBBcbtKt6eK4piKHqzLir6TB6crEnCKZxmAnsxc/exec";
+
     const marcasConfig = {
         "HP": "https://images.unsplash.com/photo-1589561084283-c307f993555c?w=400&auto=format&fit=crop&q=60",
         "Dell": "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?w=400&auto=format&fit=crop&q=60",
@@ -331,83 +255,65 @@
         "Samsung": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&auto=format&fit=crop&q=60"
     };
 
-    // Imágenes genéricas estilizadas para las especificaciones del paso 3 basadas en la categoría
-    const imagenesCatGenericas = {
-        "Cargador": "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400&auto=format&fit=crop&q=60",
-        "Batería": "https://images.unsplash.com/photo-1594541818554-d33a7c6f5887?w=400&auto=format&fit=crop&q=60",
-        "Teclado": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&auto=format&fit=crop&q=60",
-        "Otros Accesorios": "https://images.unsplash.com/photo-1631553127988-34758778a065?w=400&auto=format&fit=crop&q=60"
+    const imagenesPredeterminadas = {
+        "Cargador": "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400",
+        "Batería": "https://images.unsplash.com/photo-1594541818554-d33a7c6f5887?w=400",
+        "Teclado": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400",
+        "Otros Accesorios": "https://images.unsplash.com/photo-1631553127988-34758778a065?w=400"
     };
 
-    const categoriasDisponibles = ["Cargador", "Batería", "Teclado", "Otros Accesorios"];
-    const specsPorCat = {
-        "Cargador": [
-            { spec: "Punta Azul Premium (65W)", p: 25, info: "Para líneas Pavilion, Envy y ProBook avanzadas.", acc: "Cable de Poder Certificado", accP: 5 },
-            { spec: "Punta Aguja Clásica (90W)", p: 28, info: "Sistemas corporativos de alta demanda eléctrica.", acc: "Cable de Poder Certificado", accP: 5 },
-            { spec: "Tipo-C Ultra Fast (65W)", p: 35, info: "Carga inteligente PD para laptops modernas.", acc: "Protector contra sobretensiones", accP: 10 },
-            { spec: "Punta Amarilla Rectangular", p: 25, info: "Especializado para la gama ThinkPad y IdeaPad.", acc: "Cable de poder plano", accP: 4 }
-        ],
-        "Batería": [
-            { spec: "Gama Alta Lithium-Ion", p: 45, info: "Celda reforzada de alta duración y ciclos de carga extendidos.", acc: "Kit de destornilladores de precisión", accP: 6 },
-            { spec: "Gama Estándar Slim-Pack", p: 38, info: "Diseño ultradelgado interno de fácil reemplazo.", acc: "Garantía Extendida (+6 meses)", accP: 8 }
-        ],
-        "Teclado": [
-            { spec: "Teclado Español ISO", p: 20, info: "Membrana suave con distribución en español e incluye letra Ñ.", acc: "Silicona protectora antipolvo", accP: 3 },
-            { spec: "Teclado Retroiluminado RGB", p: 32, info: "Conector dedicado para iluminación LED nocturna.", acc: "Silicona protectora antipolvo", accP: 3 }
-        ],
-        "Otros Accesorios": [
-            { spec: "Pasta Térmica Artic MX-4", p: 12, info: "Compuesto térmico de micropartículas de carbono de alto rendimiento.", acc: "Espátula aplicadora", accP: 2 },
-            { spec: "Cooler Fan Interno Pro", p: 18, info: "Extractor de aire silencioso compatible con disipadores OEM.", acc: "Tornillos de montaje de titanio", accP: 2 }
-        ]
-    };
-
-    const productosBase = [];
-    let idCounter = 1;
-
-    // Generador en bucle del inventario masivo (+120 items únicos)
-    Object.keys(marcasConfig).forEach(m => {
-        categoriasDisponibles.forEach(c => {
-            const listaSpecs = specsPorCat[c];
-            listaSpecs.forEach((s, index) => {
-                productosBase.push({
-                    id: String(idCounter++),
-                    marca: m,
-                    categoria: c,
-                    especificacion: `${s.spec} v${index + 1}`,
-                    stock: Math.floor(Math.random() * 12) + 2,
-                    precio: s.p + (index * 2),
-                    info: `${s.info} Rendimiento garantizado LocalSITEC.`,
-                    tieneAccesorio: !!s.acc,
-                    accNombre: s.acc || "",
-                    accPrecio: s.accP || 0,
-                    imgUrl: imagenesCatGenericas[c] // Asigna foto correspondiente del producto
-                });
-            });
-        });
-    });
-
+    let productosBase = [];
     let seleccion = { marca: '', categoria: '', especificacion: '' };
     let productoActual = null;
-    let agregarAccesorio = false;
     const NUMERO_WHATSAPP = "584120000000"; 
 
     document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("img-cat-cargador").src = imagenesPredeterminadas["Cargador"];
+        document.getElementById("img-cat-bateria").src = imagenesPredeterminadas["Batería"];
+        document.getElementById("img-cat-teclado").src = imagenesPredeterminadas["Teclado"];
+        document.getElementById("img-cat-otros").src = imagenesPredeterminadas["Otros Accesorios"];
+
         cargarMarcas();
-        generarCatalogoInferior();
-        avanzarAPaso(1);
+        cargarDatosDesdeGoogle();
+        window.addEventListener("hashchange", chequearRutaUrl);
     });
+
+    async function cargarDatosDesdeGoogle() {
+        try {
+            document.getElementById("pantalla-carga").classList.remove("oculto");
+            const response = await fetch(URL_GOOGLE_SCRIPT);
+            productosBase = await response.json();
+            
+            productosBase = productosBase.map(p => ({
+                ...p,
+                imgUrl: p.imgUrl && p.imgUrl.trim() !== "" ? p.imgUrl : imagenesPredeterminadas[p.categoria]
+            }));
+
+            document.getElementById("pantalla-carga").classList.add("oculto");
+            chequearRutaUrl();
+            generarCatalogoInferior();
+        } catch (error) {
+            alert("Error de conexión con Google.");
+        }
+    }
+
+    function chequearRutaUrl() {
+        if(window.location.hash === "#admin") {
+            document.getElementById("vista-tienda").classList.add("oculto");
+            document.getElementById("vista-admin").classList.remove("oculto");
+            renderearListaAdmin();
+        } else {
+            document.getElementById("vista-admin").classList.add("oculto");
+            document.getElementById("vista-tienda").classList.remove("oculto");
+            reiniciarAsistente();
+        }
+    }
 
     function cargarMarcas() {
         const grid = document.getElementById("grid-marcas");
         grid.innerHTML = '';
         Object.keys(marcasConfig).forEach(m => {
-            grid.innerHTML += `
-                <div class="opcion-card" onclick="seleccionarMarca('${m}')">
-                    <div class="opcion-img-wrapper">
-                        <img src="${marcasConfig[m]}" alt="${m}">
-                    </div>
-                    <span>${m}</span>
-                </div>`;
+            grid.innerHTML += `<div class="opcion-card" onclick="seleccionarMarca('${m}')"><div class="opcion-img-wrapper"><img src="${marcasConfig[m]}"></div><span>${m}</span></div>`;
         });
     }
 
@@ -428,118 +334,167 @@
         const filtrados = productosBase.filter(p => p.marca === seleccion.marca && p.categoria === seleccion.categoria);
         const grid = document.getElementById("grid-especificaciones");
         grid.innerHTML = '';
-        
         if(filtrados.length === 0) {
-            grid.innerHTML = `
-                <div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)">
-                    <div class="opcion-img-wrapper" style="height:120px;">
-                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&auto=format&fit=crop&q=60" alt="Soporte">
-                    </div>
-                    <span>Soporte personalizado inmediato</span>
-                </div>`;
+            grid.innerHTML = `<div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)"><div class="opcion-img-wrapper" style="height:120px;"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400"></div><span>Asistencia Personalizada</span></div>`;
             return;
         }
         filtrados.forEach(p => {
-            grid.innerHTML += `
-                <div class="opcion-card" onclick="procesarFin('${p.id}')">
-                    <div class="opcion-img-wrapper">
-                        <img src="${p.imgUrl}" alt="Hardware">
-                    </div>
-                    <span>${p.especificacion}</span>
-                </div>`;
+            grid.innerHTML += `<div class="opcion-card" onclick="procesarFin('${p.id}')"><div class="opcion-img-wrapper"><img src="${p.imgUrl}"></div><span>${p.especificacion}</span></div>`;
         });
     }
 
     function procesarFin(id) {
         avanzarAPaso(4);
-        agregarAccesorio = false;
-        document.getElementById("contenedor-adicional").classList.remove("activo");
-        
         if(!id) {
             productoActual = null;
-            document.getElementById("resultado-titulo").innerText = "Variante a Medida";
-            document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock" style="color:#f59e0b; border-color:rgba(245,158,11,0.2)">Atención Técnica Dedicada</div>`;
-            document.getElementById("resultado-descripcion").innerText = `Solicita la importación o verificación manual para la marca ${seleccion.marca}.`;
-            document.getElementById("resultado-precio").innerText = "A convenir";
-            document.getElementById("contenedor-adicional").classList.add("oculto");
+            document.getElementById("resultado-titulo").innerText = "Variante Singular";
+            document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock">Atención Técnica Exclusiva</div>`;
+            document.getElementById("resultado-descripcion").innerText = `Validaremos compatibilidad manual para tu equipo ${seleccion.marca}.`;
+            document.getElementById("resultado-precio").innerText = "A Consultar";
             actualizarBotonWA();
             return;
         }
-
-        productoActual = productosBase.find(p => p.id === id);
-        document.getElementById("resultado-titulo").innerText = `${productoActual.marca} - ${productoActual.categoria}`;
-        document.getElementById("resultado-descripcion").innerText = productoActual.info;
-        document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock">✓ VERIFICADO EN STOCK (DISPONIBILIDAD INMEDIATA)</div>`;
-        
-        if(productoActual.tieneAccesorio) {
-            document.getElementById("contenedor-adicional").classList.remove("oculto");
-            document.getElementById("txt-acc-nombre").innerText = `¿Añadir ${productoActual.accNombre}?`;
-            document.getElementById("txt-acc-precio").innerText = `+ $${productoActual.accPrecio}.00`;
-        } else {
-            document.getElementById("contenedor-adicional").classList.add("oculto");
-        }
-        
-        calcularPrecioFinal();
-    }
-
-    function toggleAccesorio() {
-        agregarAccesorio = !agregarAccesorio;
-        const div = document.getElementById("contenedor-adicional");
-        agregarAccesorio ? div.classList.add("activo") : div.classList.remove("activo");
-        calcularPrecioFinal();
-    }
-
-    function calcularPrecioFinal() {
-        if(!productoActual) return;
-        let total = productoActual.precio;
-        if(agregarAccesorio) total += productoActual.accPrecio;
-        document.getElementById("resultado-precio").innerText = `$${total}.00`;
+        productoActual = productosBase.find(p => String(p.id) === String(id));
+        document.getElementById("resultado-titulo").innerText = `${productoActual.marca} — ${productoActual.categoria}`;
+        document.getElementById("resultado-descripcion").innerText = productoActual.info || "Garantía LocalSITEC.";
+        document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock">✓ DISPONIBLE (STOCK: ${productoActual.stock} UNIDADES)</div>`;
+        document.getElementById("resultado-precio").innerText = `$${productoActual.precio}.00`;
         actualizarBotonWA();
     }
 
     function actualizarBotonWA() {
-        let mensaje = "";
-        if(!productoActual) {
-            mensaje = `Hola, estoy interesado en una variante personalizada de la marca ${seleccion.marca} para la línea de ${seleccion.categoria}. ¿Tienen alternativas compatibles?`;
-        } else {
-            mensaje = `Hola, estoy interesado en el producto ${productoActual.categoria} ${productoActual.marca} de especificación ${productoActual.especificacion}.`;
-            if(agregarAccesorio) {
-                mensaje += ` También deseo anexar el elemento opcional: ${productoActual.accNombre}.`;
-            }
-            let precioFinal = productoActual.precio + (agregarAccesorio ? productoActual.accPrecio : 0);
-            mensaje += ` El precio cotizado en catálogo web es de $${precioFinal}.00. ¿Cuáles son los métodos de pago?`;
-        }
+        let mensaje = !productoActual 
+            ? `Hola, necesito asistencia técnica personalizada para un componente de la marca ${seleccion.marca}.`
+            : `Hola LocalSITEC, quiero adquirir: ${productoActual.categoria} ${productoActual.marca} [${productoActual.especificacion}]. El precio es de $${productoActual.precio}.00.`;
         document.getElementById("btn-enviar-wa").href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
     }
 
-    function toggleCatalogoVisual() {
-        const panel = document.getElementById("lista-catalogo-id");
-        const icono = document.getElementById("icono-catalogo");
-        if(panel.classList.contains("oculto")) {
-            panel.classList.remove("oculto");
-            icono.innerText = "expand_less";
-        } else {
-            panel.classList.add("oculto");
-            icono.innerText = "expand_more";
-        }
+    function toggleCatalogoVisual() { document.getElementById("lista-catalogo-id").classList.toggle("oculto"); }
+    function generarCatalogoInferior() {
+        const lista = document.getElementById("lista-catalogo-id"); lista.innerHTML = '';
+        productosBase.forEach(p => {
+            lista.innerHTML += `<div class="item-catalogo"><div class="item-detalles"><strong>${p.marca} - ${p.categoria}</strong><p>${p.especificacion} (Stock: ${p.stock})</p></div><div class="item-precio">$${p.precio}.00</div></div>`;
+        });
     }
 
-    function generarCatalogoInferior() {
-        const lista = document.getElementById("lista-catalogo-id");
-        lista.innerHTML = '';
+    function renderearListaAdmin() {
+        const contenedor = document.getElementById("lista-admin-items");
+        contenedor.innerHTML = '';
         productosBase.forEach(p => {
-            lista.innerHTML += `
-                <div class="item-catalogo">
-                    <div class="item-detalles">
-                        <strong>${p.marca} - ${p.categoria}</strong>
+            contenedor.innerHTML += `
+                <div class="item-admin-card">
+                    <img class="item-admin-thumb" src="${p.imgUrl}" alt="Thumb">
+                    <div class="item-admin-info">
+                        <strong>[${p.marca}] ${p.categoria}</strong>
                         <p>${p.especificacion}</p>
+                        <p style="color: var(--oro-premium); font-weight:600;">$${p.precio} — Stock: ${p.stock}</p>
                     </div>
-                    <div class="item-precio">$${p.precio}.00</div>
+                    <div class="admin-acciones-btn">
+                        <button class="btn-action edit" onclick="cargarFormularioEdicion('${p.id}')" title="Editar Todo">
+                            <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
+                        </button>
+                        <button class="btn-action delete" onclick="eliminarProductoAdmin('${p.id}')" title="Eliminar">
+                            <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+                        </button>
+                    </div>
                 </div>`;
         });
     }
 
-    function abrirWaDirecto() { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=Hola%20LocalSITEC,%20solicito%20asistencia%20inmediata`, '_blank'); }
+    function cargarFormularioEdicion(id) {
+        const p = productosBase.find(prod => String(prod.id) === String(id));
+        if(!p) return;
+
+        document.getElementById("edit-id").value = p.id;
+        document.getElementById("add-marca").value = p.marca;
+        document.getElementById("add-categoria").value = p.categoria;
+        document.getElementById("add-spec").value = p.especificacion;
+        document.getElementById("add-imgurl").value = p.imgUrl.includes("images.unsplash.com") && p.imgUrl === imagenesPredeterminadas[p.categoria] ? "" : p.imgUrl;
+        document.getElementById("add-precio").value = p.precio;
+        document.getElementById("add-stock").value = p.stock;
+
+        document.getElementById("admin-panel-title").innerText = "Modificando Producto";
+        document.getElementById("admin-panel-subtitle").innerText = "Editando fila en Google Sheets";
+        document.getElementById("btn-save-text").innerText = "Actualizar Cambios";
+        document.getElementById("btn-cancelar-edicion").classList.remove("oculto");
+    }
+
+    function cancelarEdicion() {
+        document.getElementById("edit-id").value = "";
+        document.getElementById("add-spec").value = "";
+        document.getElementById("add-imgurl").value = "";
+        document.getElementById("add-precio").value = "";
+        document.getElementById("add-stock").value = "";
+
+        document.getElementById("admin-panel-title").innerText = "Nuevo Producto";
+        document.getElementById("admin-panel-subtitle").innerText = "Añadir a Google Sheets";
+        document.getElementById("btn-save-text").innerText = "Guardar en la Nube";
+        document.getElementById("btn-cancelar-edicion").classList.add("oculto");
+    }
+
+    async function guardarProductoAdmin() {
+        const idExistente = document.getElementById("edit-id").value;
+        const marca = document.getElementById("add-marca").value;
+        const categoria = document.getElementById("add-categoria").value;
+        const spec = document.getElementById("add-spec").value.trim();
+        const imgUrl = document.getElementById("add-imgurl").value.trim();
+        const precio = document.getElementById("add-precio").value;
+        const stock = document.getElementById("add-stock").value;
+
+        if(!spec || !precio || !stock) return alert("Por favor complete las especificaciones, precio y stock.");
+
+        const btn = document.getElementById("btn-save-text");
+        btn.innerText = "Sincronizando la nube...";
+        btn.disabled = true;
+
+        const esEdicion = idExistente !== "";
+        const payload = {
+            action: esEdicion ? "update" : "add",
+            id: esEdicion ? idExistente : String(Date.now()),
+            marca: marca,
+            categoria: categoria,
+            especificacion: spec,
+            stock: Number(stock),
+            precio: Number(precio),
+            info: "Importación directa homologada por LocalSITEC.",
+            imgUrl: imgUrl
+        };
+
+        try {
+            await fetch(URL_GOOGLE_SCRIPT, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            alert(esEdicion ? "¡Fila modificada con éxito en Google Sheets!" : "¡Nuevo ítem registrado con éxito!");
+            cancelarEdicion();
+            await cargarDatosDesdeGoogle();
+        } catch (e) {
+            alert("Error de comunicación.");
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function eliminarProductoAdmin(id) {
+        if(!confirm("¿Seguro que deseas eliminar este producto de Google Sheets por completo?")) return;
+        try {
+            await fetch(URL_GOOGLE_SCRIPT, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "delete", id: id })
+            });
+            alert("Eliminado.");
+            await cargarDatosDesdeGoogle();
+        } catch (e) {
+            alert("Error.");
+        }
+    }
+
+    function abrirWaDirecto() { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=Solicito%20información`, '_blank'); }
     function reiniciarAsistente() { seleccion = { marca: '', categoria: '', especificacion: '' }; productoActual = null; avanzarAPaso(1); }
 </script>
 </body>
