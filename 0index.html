@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalSITEC - Expertos en Energía</title>
+    <!-- Iconos de Google Font para los componentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-principal: #0b111e;
+            --bg-tarjeta: #131c2e;
+            --bg-input: #1b273f;
+            --cian: #00d2ff;
+            --texto-blanco: #ffffff;
+            --texto-mutado: #94a3b8;
+            --verde-wa: #25d366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-blanco);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Contenedor principal imitando la interfaz de la imagen */
+        .contenedor-app {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-principal);
+            border: 1px solid #1e293b;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .marca-info h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .marca-info p {
+            font-size: 0.7rem;
+            color: var(--texto-mutado);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .btn-wa-directo {
+            background-color: rgba(37, 211, 102, 0.15);
+            color: var(--verde-wa);
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .btn-wa-directo:hover {
+            background-color: var(--verde-wa);
+            color: white;
+        }
+
+        /* Sección Hero / Introducción */
+        .hero {
+            padding: 24px 20px;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #fff, var(--texto-mutado));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 0.9rem;
+            color: var(--texto-mutado);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Indicador de pasos */
+        .indicador-pasos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 20px 25px 20px;
+            position: relative;
+        }
+
+        .indicador-pasos::before {
+            content: '';
+            position: absolute;
+            background: #1e293b;
+            height: 2px;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .paso-circulo {
+            width: 35px;
+            height: 35px;
+            background-color: var(--bg-tarjeta);
+            border: 2px solid #1e293b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--texto-mutado);
+            z-index: 2;
+            transition: 0.3s;
+        }
+
+        .paso-circulo.activo {
+            background-color: var(--cian);
+            border-color: var(--cian);
+            color: var(--bg-principal);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        /* Formulario del Asistente */
+        .asistente-caja {
+            background-color: var(--bg-tarjeta);
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin: 0 15px 20px 15px;
+            border: 1px solid #1e293b;
+        }
+
+        .asistente-caja h3 {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .asistente-caja .subtitulo {
+            font-size: 0.85rem;
+            color: var(--texto-mutado);
+            margin-bottom: 20px;
+        }
+
+        /* Grid de opciones seleccionables */
+        .opciones-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .opcion-card {
+            background-color: var(--bg-input);
+            border: 1px solid transparent;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .opcion-card:hover {
+            border-color: #334155;
+            background-color: #243354;
+        }
+
+        .opcion-card .icon {
+            font-size: 2rem;
+            color: var(--texto-mutado);
+        }
+
+        .opcion-card.seleccionado {
+            border-color: var(--cian);
+            background-color: rgba(0, 210, 255, 0.05);
+        }
+
+        .opcion-card.seleccionado .icon {
+            color: var(--cian);
+        }
+
+        /* Pantalla de Resultado Final */
+        .resultado-caja {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .alerta-stock {
+            background-color: rgba(0, 210, 255, 0.1);
+            border: 1px solid var(--cian);
+            padding: 12px;
+            border-radius: 10px;
+            color: var(--cian);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .alerta-alternativa {
+            background-color: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            padding: 12px;
+            border-radius: 10px;
+            color: #f59e0b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .precio-tag {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        /* Botones de acción */
+        .btn-primario {
+            background-color: var(--cian);
+            color: var(--bg-principal);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-primario:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-whatsapp {
+            background-color: var(--verde-wa);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-regresar {
+            background: transparent;
+            color: var(--texto-mutated);
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .oculto {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor-app">
+    <!-- Header de la Aplicación -->
+    <header class="header">
+        <div class="marca-info">
+            <h1>LocalSITEC</h1>
+            <p>POWER EXPERTS</p>
+        </div>
+        <a href="https://wa.me/584120000000" target="_blank" class="btn-wa-directo" title="Contacto Directo">
+            <span class="material-symbols-outlines"><span class="material-symbols-outlined">chat</span></span>
+        </a>
+    </header>
+
+    <!-- Flujo del Embudo / Asistente -->
+    <main>
+        <!-- Vista de Bienvenida -->
+        <div id="vista-inicio" class="hero">
+            <h2>En LocalSITEC te guiamos por marca, modelo y potencia.</h2>
+            <p>Si lo tenemos, te decimos el precio al instante. Si no, te ofrecemos una alternativa compatible — todo cerrado por WhatsApp de forma personalizada.</p>
+            <button class="btn-primario" onclick="avanzarAPaso(1)">
+                Iniciar asistente <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+
+        <!-- Caja contenedora del Asistente por pasos -->
+        <div id="vista-asistente" class="oculto">
+            <!-- Barra de progreso de pasos -->
+            <div class="indicador-pasos">
+                <div class="paso-circulo" id="circulo-1">1</div>
+                <div class="paso-circulo" id="circulo-2">2</div>
+                <div class="paso-circulo" id="circulo-3">3</div>
+                <div class="paso-circulo" id="circulo-4">4</div>
+            </div>
+
+            <!-- PASO 1: Selección de Marca -->
+            <div id="paso-1" class="asistente-caja oculto">
+                <h3>¿Qué marca es tu laptop?</h3>
+                <p class="subtitulo">Elige el fabricante. Si no aparece, escríbenos directo.</p>
+                <div class="opciones-grid" id="grid-marcas">
+                    <!-- Se genera dinámicamente con JS -->
+                </div>
+            </div>
+
+            <!-- PASO 2: Categoría / Tipo de accesorio -->
+            <div id="paso-2" class="asistente-caja oculto">
+                <h3>¿Qué estás buscando?</h3>
+                <p class="subtitulo">Selecciona la categoría del accesorio que necesitas.</p>
+                <div class="opciones-grid">
+                    <div class="opcion-card" onclick="seleccionarCategoria('Cargador')">
+                        <span class="material-symbols-outlined icon">charger</span>
+                        <span>Cargador de Laptop</span>
+                    </div>
+                    <div class="opcion-card" onclick="seleccionarCategoria('Accesorio')">
+                        <span class="material-symbols-outlined icon">extension</span>
+                        <span>Otros Accesorios</span>
+                    </div>
+                </div>
+                <button class="btn-regresar" onclick="retrocederPaso(1)">Volver</button>
+            </div>
+
+            <!-- PASO 3: Especificaciones de Potencia (Punta / Watts) -->
+            <div id="paso-3" class="asistente-caja oculto">
+                <h3>Especificaciones clave</h3>
+                <p class="subtitulo">Selecciona la variante o potencia aproximada.</p>
+                <div class="opciones-grid" id="grid-especificaciones">
+                    <!-- Se genera dinámicamente según la marca y tipo -->
+                </div>
+                <button class="btn-regresar" onclick="retrocederPaso(2)">Volver</button>
+            </div>
+
+            <!-- PASO 4: Pantalla del Embudo Final (Resultado + Redirección WA) -->
+            <div id="paso-4" class="asistente-caja oculto">
+                <div class="resultado-caja">
+                    <h3 id="resultado-titulo">Analizando disponibilidad...</h3>
+                    <div id="resultado-status"></div>
+                    <p id="resultado-descripcion" style="color: var(--texto-mutado); font-size: 0.95rem;"></p>
+                    <div id="resultado-precio" class="precio-tag"></div>
+                    
+                    <a id="btn-enviar-wa" href="#" target="_blank" class="btn-whatsapp">
+                        <span class="material-symbols-outlined">send</span> Concretar por WhatsApp
+                    </a>
+                </div>
+                <button class="btn-regresar" onclick="reiniciarAsistente()">Consultar otro producto</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // --- BASE DE DATOS LOCAL DE PRODUCTOS ---
+    // (Esto es lo que más adelante podrás conectar con tu Google Sheets)
+    const productosBase = [
+        { id: "1", marca: "HP", categoria: "Cargador", especificación: "Punta Azul (45W/65W)", stock: 12, precio: "$25.00", info: "Cargador HP Smart original compatible con series Pavilion, Envy y EliteBook.", variacion: null },
+        { id: "2", marca: "HP", categoria: "Cargador", especificación: "Punta Negra Gruesa", stock: 0, precio: "$20.00", info: "Cargador convencional HP punta redonda antigua.", variacion: "Tenemos disponible un adaptador universal de alta calidad compatible." },
+        { id: "3", marca: "Dell", categoria: "Cargador", especificación: "Punta Fina (65W)", stock: 8, precio: "$28.00", info: "Cargador Dell Inspiron/Vostro punta fina con pin central.", variacion: null },
+        { id: "4", marca: "Dell", categoria: "Cargador", especificación: "Tipo-C (65W)", stock: 5, precio: "$35.00", info: "Cargador Tipo-C compatible con laptops modernas Dell XPS y Latitude.", variacion: null },
+        { id: "5", marca: "Lenovo", categoria: "Cargador", especificación: "Punta Rectangular (Square)", stock: 15, precio: "$25.00", info: "Cargador Lenovo punta amarilla rectangular para ThinkPad e IdeaPad.", variacion: null },
+        { id: "6", marca: "ASUS", categoria: "Cargador", especificación: "Punta Estándar Asus", stock: 4, precio: "$24.00", info: "Cargador compatible con series Asus Vivobook y Zenbook.", variacion: null },
+        { id: "7", marca: "HP", categoria: "Accesorio", especificación: "Protector de teclado", stock: 20, precio: "$5.00", info: "Protector de silicón contra polvo y líquidos.", variacion: null },
+        { id: "8", marca: "Dell", categoria: "Accesorio", especificación: "Batería Interna", stock: 0, precio: "$45.00", info: "Batería de reemplazo para serie Inspiron.", variacion: "La traemos bajo pedido directo en 7 días hábiles." }
+    ];
+
+    // Variables de estado de la navegación del usuario
+    let seleccion = {
+        marca: '',
+        categoria: '',
+        especificacion: ''
+    };
+
+    const NUMERO_WHATSAPP = "584120000000"; // Reemplaza por tu número real de soporte de SITEC
+
+    // --- INICIALIZACIÓN ---
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarMarcasunicas();
+    });
+
+    // Carga las marcas existentes en la base de datos para no repetir
+    function cargarMarcasunicas() {
+        const marcas = [...new Set(productosBase.map(p => p.marca))];
+        const grid = document.getElementById("grid-marcas");
+        grid.innerHTML = '';
+        
+        marcas.forEach(marca => {
+            grid.innerHTML += `
+                <div class="opcion-card" onclick="seleccionarMarca('${marca}')">
+                    <span class="material-symbols-outlined icon">laptop_mac</span>
+                    <span>${marca}</span>
+                </div>
+            `;
+        });
+    }
+
+    // --- MANEJO DEL FLUJO ---
+    function avanzarAPaso(paso) {
+        document.getElementById("vista-inicio").classList.add("oculto");
+        document.getElementById("vista-asistente").classList.remove("oculto");
+        
+        // Ocultar todos los pasos internos
+        for(let i=1; i<=4; i++) {
+            document.getElementById(`paso-${i}`).classList.add("oculto");
+            document.getElementById(`circulo-${i}`).classList.remove("activo");
+        }
+        
+        // Mostrar paso actual y prender su círculo indicador
+        document.getElementById(`paso-${paso}`).classList.remove("oculto");
+        document.getElementById(`circulo-${paso}`).classList.add("activo");
+    }
+
+    function retrocederPaso(pasoAnterior) {
+        avanzarAPaso(pasoAnterior);
+    }
+
+    function seleccionarMarca(marca) {
+        seleccion.marca = marca;
+        avanzarAPaso(2);
+    }
+
+    function seleccionarCategoria(cat) {
+        seleccion.categoria = cat;
+        filtrarEspecificaciones();
+        avanzarAPaso(3);
+    }
+
+    // Genera las opciones del Paso 3 según los filtros de los pasos 1 y 2
+    function filtrarEspecificaciones() {
+        const filtrados = productosBase.filter(p => p.marca === seleccion.marca && p.categoria === seleccion.categoria);
+        const grid = document.getElementById("grid-especificaciones");
+        grid.innerHTML = '';
+
+        if(filtrados.length === 0) {
+            grid.innerHTML = `<p style='grid-column: span 2; text-align:center; color:var(--texto-mutado)'>No hay especificaciones registradas. Avanza para consultar alternativas por chat.</p>`;
+            // Botón genérico si no hay coincidencia exacta exacta
+            grid.innerHTML += `
+                <div class="opcion-card" style="grid-column: span 2;" onclick="procesarResultadoFinal(null)">
+                    <span class="material-symbols-outlined icon">support_agent</span>
+                    <span>Consultar variante personalizada</span>
+                </div>
+            `;
+            return;
+        }
+
+        filtrados.forEach(prod => {
+            grid.innerHTML += `
+                <div class="opcion-card" onclick="procesarResultadoFinal('${prod.id}')">
+                    <span class="material-symbols-outlined icon">build</span>
+                    <span>${prod.especificación}</span>
+                </div>
+            `;
+        });
+    }
+
+    // --- PROCESADO DEL EMBUDO (PASO 4) ---
+    function procesarResultadoFinal(productoId) {
+        avanzarAPaso(4);
+        
+        const titulo = document.getElementById("resultado-titulo");
+        const status = document.getElementById("resultado-status");
+        const desc = document.getElementById("resultado-descripcion");
+        const precio = document.getElementById("resultado-precio");
+        const btnWa = document.getElementById("btn-enviar-wa");
+
+        let mensajeWhatsApp = "";
+
+        if(!productoId) {
+            // El usuario seleccionó una combinación no registrada o personalizada
+            titulo.innerText = "¡Consultemos disponibilidad!";
+            status.innerHTML = `<div class="alerta-alternativa">Soporte técnico inmediato</div>`;
+            desc.innerText = `Buscabas un artículo para tu laptop ${seleccion.marca} (${seleccion.categoria}). Un agente de LocalSITEC te dirá si nos queda inventario en almacén o compatibilidades.`;
+            precio.innerText = "Precio bajo consulta";
+            
+            mensajeWhatsApp = `Hola LocalSITEC, estoy usando el asistente web. Busco un accesorio tipo: ${seleccion.categoria} para una laptop marca ${seleccion.marca}. ¿Me podrían dar disponibilidad y precio actual?`;
+        } else {
+            // Producto encontrado en nuestra base de datos
+            const prod = productosBase.find(p => p.id === productoId);
+            titulo.innerText = `${prod.marca} - ${prod.especificación}`;
+            desc.innerText = prod.info;
+            precio.innerText = prod.precio;
+
+            if(prod.stock > 0) {
+                status.innerHTML = `<div class="alerta-stock">✓ ¡DISPONIBLE EN STOCK!</div>`;
+                mensajeWhatsApp = `Hola LocalSITEC. Vi en el asistente que tienen disponible el ${prod.categoria} ${prod.marca} (${prod.especificación}) por un precio de ${prod.precio}. Quiero concretar la compra.`;
+            } else {
+                // Si no hay stock directo, le ofrece la variación/alternativa guardada en la hoja de datos
+                status.innerHTML = `<div class="alerta-alternativa">⚠ Agotado (Pero tenemos una solución)</div>`;
+                if(prod.variacion) {
+                    desc.innerHTML += `<br><br><strong style="color:#fff">Alternativa disponible:</strong> ${prod.variacion}`;
+                }
+                mensajeWhatsApp = `Hola LocalSITEC. Consulté por el asistente el repuesto ${prod.marca} (${prod.especificación}). Vi que no hay stock directo pero quiero consultar por la alternativa o traerlo bajo pedido.`;
+            }
+        }
+
+        // Codificar el texto para que la URL de WhatsApp sea válida
+        btnWa.href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    }
+
+    function reiniciarAsistente() {
+        seleccion = { marca: '', categoria: '', especificacion: '' };
+        document.getElementById("vista-asistente").classList.add("oculto");
+        document.getElementById("vista-inicio").classList.remove("oculto");
+    }
+</script>
+
+</body>
+</html>
