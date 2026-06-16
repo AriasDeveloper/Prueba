@@ -37,10 +37,10 @@
             padding: 12px;
         }
 
-        /* DISEÑO RESPONSIVE: Ajuste automático según el dispositivo */
+        /* DISEÑO RESPONSIVE AUTOMÁTICO */
         .contenedor-app {
             width: 100%;
-            max-width: 480px; /* Tamaño ideal tipo app móvil */
+            max-width: 480px;
             background-color: var(--bg-principal);
             border: 1px solid var(--borde);
             border-radius: 24px;
@@ -50,10 +50,8 @@
             flex-direction: column;
         }
 
-        /* Ajustes para pantallas de PC o Tablets */
         @media (min-width: 768px) {
             body { padding: 40px 20px; }
-            .contenedor-app { border-radius: 24px; }
         }
 
         /* Header */
@@ -66,7 +64,7 @@
         }
 
         .marca-info h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
-        .marca-info p { font-size: 0.7rem; color: var(--texto-mutated); color: var(--texto-mutado); letter-spacing: 1px; font-weight: 600; }
+        .marca-info p { font-size: 0.7rem; color: var(--texto-mutado); letter-spacing: 1px; font-weight: 600; }
 
         .btn-wa-directo {
             background-color: rgba(37, 211, 102, 0.15);
@@ -79,12 +77,12 @@
             align-items: center;
         }
 
-        /* Héroe / Inicio */
-        .hero { padding: 24px 20px; text-align: left; }
+        /* Inicio / Hero */
+        .hero { padding: 24px 20px; }
         .hero h2 { font-size: 1.4rem; margin-bottom: 12px; line-height: 1.3; }
         .hero p { font-size: 0.9rem; color: var(--texto-mutado); line-height: 1.5; margin-bottom: 24px; }
 
-        /* Pasos Indicadores */
+        /* Indicador de pasos */
         .indicador-pasos {
             display: flex;
             justify-content: space-between;
@@ -105,7 +103,7 @@
             background-color: var(--cian); border-color: var(--cian); color: var(--bg-principal); box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
         }
 
-        /* Cajas de interacción */
+        /* Bloques del Asistente */
         .asistente-caja {
             background-color: var(--bg-tarjeta); border-radius: 20px; padding: 20px; margin: 0 12px 20px 12px; border: 1px solid var(--borde);
         }
@@ -113,7 +111,7 @@
         .asistente-caja h3 { font-size: 1.25rem; margin-bottom: 4px; }
         .asistente-caja .subtitulo { font-size: 0.85rem; color: var(--texto-mutado); margin-bottom: 16px; }
 
-        /* Grids adaptables para móviles táctiles */
+        /* Grid de tarjetas adaptables */
         .opciones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
         .opcion-card {
@@ -121,14 +119,14 @@
             text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.2s;
         }
 
-        .opcion-card:active { transform: scale(0.97); } /* Efecto feedback táctil en teléfono */
+        .opcion-card:active { transform: scale(0.97); }
         .opcion-card .icon { font-size: 1.8rem; color: var(--texto-mutado); }
         .opcion-card.seleccionado { border-color: var(--cian); background-color: rgba(0, 210, 255, 0.05); }
 
-        /* Apartado de Accesorios Opcionales (Limpio y Estético) */
+        /* Sección de Accesorio Opcional */
         .seccion-adicional {
             background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--borde); border-radius: 12px; padding: 14px; margin: 15px 0;
-            display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s;
         }
 
         .adicional-info { display: flex; align-items: center; gap: 10px; text-align: left; }
@@ -137,18 +135,18 @@
         
         .checkbox-personalizado {
             width: 22px; height: 22px; border: 2px solid var(--texto-mutado); border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s; color: transparent;
         }
 
         .seccion-adicional.activo .checkbox-personalizado {
             background-color: var(--cian); border-color: var(--cian); color: var(--bg-principal);
         }
 
-        /* Alertas de Stock */
+        /* Alertas y Precio */
         .alerta-stock { background-color: rgba(0, 210, 255, 0.08); border: 1px solid var(--cian); padding: 10px; border-radius: 10px; color: var(--cian); font-size: 0.85rem; font-weight: 600; text-align: center; }
         .precio-tag { font-size: 2.2rem; font-weight: 700; text-align: center; margin: 8px 0; color: #fff; }
 
-        /* Botones */
+        /* Botones de acción */
         .btn-primario, .btn-whatsapp {
             background-color: var(--cian); color: var(--bg-principal); border: none; padding: 14px; border-radius: 12px;
             font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; text-decoration: none;
@@ -156,7 +154,7 @@
         .btn-whatsapp { background-color: var(--verde-wa); color: white; }
         .btn-regresar { background: transparent; color: var(--texto-mutado); border: 1px solid var(--borde); padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.85rem; }
 
-        /* SECCIÓN DISCRETA: Catálogo Completo Inferior */
+        /* CATÁLOGO INFERIOR DISCRETO */
         .seccion-catalogo-discreto {
             border-top: 1px solid var(--borde); padding: 15px; text-align: center; background: rgba(19, 28, 46, 0.4);
         }
@@ -166,13 +164,10 @@
             display: inline-flex; align-items: center; gap: 6px; font-weight: 500;
         }
 
-        .btn-toggle-catalogo:hover { color: #fff; }
-
         .lista-catalogo {
-            max-height: 250px; overflow-y: auto; margin-top: 15px; text-align: left; display: flex; flex-direction: column; gap: 8px; padding-right: 4px;
+            max-height: 220px; overflow-y: auto; margin-top: 15px; text-align: left; display: flex; flex-direction: column; gap: 8px; padding-right: 4px;
         }
 
-        /* Scrollbar estético para el catálogo */
         .lista-catalogo::-webkit-scrollbar { width: 4px; }
         .lista-catalogo::-webkit-scrollbar-thumb { background: var(--borde); border-radius: 10px; }
 
@@ -201,8 +196,9 @@
         </button>
     </header>
 
-    <!-- Flujo principal -->
+    <!-- Cuerpo principal -->
     <main style="flex: 1;">
+        <!-- Bienvenida -->
         <div id="vista-inicio" class="hero">
             <h2>En LocalSITEC te guiamos por marca y potencia.</h2>
             <p>Si lo tenemos, te decimos el precio al instante. Si no, te ofrecemos una alternativa compatible — todo cerrado por WhatsApp.</p>
@@ -211,6 +207,7 @@
             </button>
         </div>
 
+        <!-- Asistente -->
         <div id="vista-asistente" class="oculto">
             <div class="indicador-pasos">
                 <div class="paso-circulo" id="circulo-1">1</div>
@@ -219,14 +216,14 @@
                 <div class="paso-circulo" id="circulo-4">4</div>
             </div>
 
-            <!-- Paso 1 -->
+            <!-- Paso 1: Marca -->
             <div id="paso-1" class="asistente-caja oculto">
                 <h3>¿Qué marca es tu laptop?</h3>
                 <p class="subtitulo">Selecciona el fabricante de tu equipo.</p>
                 <div class="opciones-grid" id="grid-marcas"></div>
             </div>
 
-            <!-- Paso 2 -->
+            <!-- Paso 2: Categoría -->
             <div id="paso-2" class="asistente-caja oculto">
                 <h3>¿Qué estás buscando?</h3>
                 <p class="subtitulo">Selecciona la categoría del repuesto.</p>
@@ -243,7 +240,7 @@
                 <button class="btn-regresar" onclick="retrocederPaso(1)">Volver</button>
             </div>
 
-            <!-- Paso 3 -->
+            <!-- Paso 3: Especificación -->
             <div id="paso-3" class="asistente-caja oculto">
                 <h3>Especificaciones clave</h3>
                 <p class="subtitulo">Selecciona el tipo de punta o potencia.</p>
@@ -251,23 +248,23 @@
                 <button class="btn-regresar" onclick="retrocederPaso(2)">Volver</button>
             </div>
 
-            <!-- Paso 4: Resultado con Checkbox Dinámico -->
+            <!-- Paso 4: Cierre del embudo -->
             <div id="paso-4" class="asistente-caja oculto">
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <h3 id="resultado-titulo" style="text-align: center;"></h3>
                     <div id="resultado-status"></div>
                     <p id="resultado-descripcion" style="color: var(--texto-mutado); font-size: 0.85rem; text-align: center;"></p>
                     
-                    <!-- Checkbox de accesorio (se muestra solo si aplica) -->
+                    <!-- Casilla de accesorio adicional tildable -->
                     <div id="contenedor-adicional" class="seccion-adicional oculto" onclick="toggleAccesorio()">
                         <div class="adicional-info">
                             <span class="material-symbols-outlined" style="color: var(--cian);">add_circle</span>
                             <div>
                                 <span id="txt-acc-nombre">¿Agregar Cable de Poder?</span>
-                                <p id="txt-acc-precio">+ $5.00 (Recomendado)</p>
+                                <p id="txt-acc-precio">+ $5.00</p>
                             </div>
                         </div>
-                        <div class="checkbox-personalizado">
+                        <div class="checkbox-personalizado" id="check-icono">
                             <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
                         </div>
                     </div>
@@ -283,15 +280,13 @@
         </div>
     </main>
 
-    <!-- SECCIÓN INFERIOR DISCRETA: Catálogo Completo -->
+    <!-- Catálogo Inferior Discreto -->
     <footer class="seccion-catalogo-discreto">
         <button class="btn-toggle-catalogo" onclick="toggleCatalogoVisual()">
             <span class="material-symbols-outlined" id="icono-catalogo">expand_more</span>
             <span>Ver catálogo completo disponible</span>
         </button>
-        <div id="lista-catalogo-id" class="lista-catalogo oculto">
-            <!-- Se llena solo con JS -->
-        </div>
+        <div id="lista-catalogo-id" class="lista-catalogo oculto"></div>
     </footer>
 </div>
 
@@ -309,7 +304,7 @@
     let seleccion = { marca: '', categoria: '', especificacion: '' };
     let productoActual = null;
     let agregarAccesorio = false;
-    const NUMERO_WHATSAPP = "584120000000"; // Tu número de atención [SITEC]
+    const NUMERO_WHATSAPP = "584120000000"; // Tu número de soporte real
 
     document.addEventListener("DOMContentLoaded", () => {
         cargarMarcas();
@@ -333,24 +328,33 @@
             document.getElementById(`circulo-${i}`).classList.remove("activo");
         }
         document.getElementById(`paso-${paso}`).classList.remove("oculto");
-        document.getElementById(`circulo-${paso}`).add ? document.getElementById(`circulo-${paso}`).classList.add("activo") : document.getElementById(`circulo-${paso}`).classList.add("activo");
+        document.getElementById(`circulo-${paso}`).classList.add("activo");
     }
 
     function retrocederPaso(p) { avanzarAPaso(p); }
-    function seleccionarMarca(m) { seleccion.marca = m; avanzarAPaso(2); }
-    function seleccionarCategoria(c) { seleccion.categoria = c; filtrarSpecs(); avanzarAPaso(3); }
+    
+    function seleccionarMarca(m) { 
+        seleccion.marca = m; 
+        avanzarAPaso(2); 
+    }
+    
+    function seleccionarCategoria(c) { 
+        seleccion.categoria = c; 
+        filtrarSpecs(); 
+        avanzarAPaso(3); 
+    }
 
     function filtrarSpecs() {
         const filtrados = productosBase.filter(p => p.marca === seleccion.marca && p.categoria === seleccion.categoria);
-        const grid = document.getElementById("grid-specificaciones");
+        const grid = document.getElementById("grid-especificaciones"); // <-- Corregido el ID aquí
         grid.innerHTML = '';
         
         if(filtrados.length === 0) {
-            grid.innerHTML = `<div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)"><span>Consultar variante personalizada</span></div>`;
+            grid.innerHTML = `<div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)"><span class="material-symbols-outlined icon">support_agent</span><span>Consultar variante personalizada</span></div>`;
             return;
         }
         filtrados.forEach(p => {
-            grid.innerHTML += `<div class="opcion-card" onclick="procesarFin('${p.id}')"><span class="material-symbols-outlined icon">shutter_speed</span><span>${p.especificacion}</span></div>`;
+            grid.innerHTML += `<div class="opcion-card" onclick="procesarFin('${p.id}')"><span class="material-symbols-outlined icon">bolt</span><span>${p.especificacion}</span></div>`;
         });
     }
 
@@ -362,8 +366,8 @@
         if(!id) {
             productoActual = null;
             document.getElementById("resultado-titulo").innerText = "Variante Personalizada";
-            document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock" style="color:#f59e0b; border-color:#f59e0b">Atención Inmediata</div>`;
-            document.getElementById("resultado-descripcion").innerText = "No encontramos coincidencia exacta en el sistema, pero un experto te atenderá en un segundo.";
+            document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock" style="color:#f59e0b; border-color:#f59e0b">Atención Personalizada</div>`;
+            document.getElementById("resultado-descripcion").innerText = "No encontramos coincidencia exacta, pero un experto te dirá las compatibilidades disponibles en tienda.";
             document.getElementById("resultado-precio").innerText = "Consultar";
             document.getElementById("contenedor-adicional").classList.add("oculto");
             actualizarBotonWA();
@@ -371,14 +375,14 @@
         }
 
         productoActual = productosBase.find(p => p.id === id);
-        document.getElementById("resultado-titulo").innerText = `${productoActual.marca} (${productoActual.especificacion})`;
+        document.getElementById("resultado-titulo").innerText = `${productoActual.marca}`;
         document.getElementById("resultado-descripcion").innerText = productoActual.info;
-        document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock">✓ DISPONIBLE EN ALMACÉN</div>`;
+        document.getElementById("resultado-status").innerHTML = `<div class="alerta-stock">✓ DISPONIBLE EN STOCK</div>`;
         
         if(productoActual.tieneAccesorio) {
             document.getElementById("contenedor-adicional").classList.remove("oculto");
             document.getElementById("txt-acc-nombre").innerText = `¿Añadir ${productoActual.accNombre}?`;
-            document.getElementById("txt-acc-precio").innerText = `+ $${productoActual.accPrecio}.00 (Garantizado)`;
+            document.getElementById("txt-acc-precio").innerText = `+ $${productoActual.accPrecio}.00`;
         } else {
             document.getElementById("contenedor-adicional").classList.add("oculto");
         }
@@ -389,7 +393,11 @@
     function toggleAccesorio() {
         agregarAccesorio = !agregarAccesorio;
         const div = document.getElementById("contenedor-adicional");
-        agregarAccesorio ? div.classList.add("activo") : div.classList.remove("activo");
+        if(agregarAccesorio) {
+            div.classList.add("activo");
+        } else {
+            div.classList.remove("activo");
+        }
         calcularPrecioFinal();
     }
 
@@ -404,18 +412,21 @@
     }
 
     function actualizarBotonWA() {
-        let texto = "";
+        let mensaje = "";
         if(!productoActual) {
-            texto = `Hola LocalSITEC, necesito un accesorio/cargador personalizado para mi laptop ${seleccion.marca}. ¿Me ayudan con los modelos disponibles?`;
+            mensaje = `Hola, estoy interesado en un producto personalizado de la marca ${seleccion.marca} (${seleccion.categoria}). ¿Tienen disponibilidad actual?`;
         } else {
-            let total = productoActual.precio + (agregarAccesorio ? productoActual.accPrecio : 0);
-            texto = `Hola LocalSITEC! Usé el asistente de la página. Quiero el cargador ${productoActual.marca} ${productoActual.especificacion}.`;
+            // MENSAJE PERSONALIZADO SOLICITADO
+            mensaje = `Hola, estoy interesado en el producto Cargador ${productoActual.marca} de especificación ${productoActual.especificacion}.`;
+            
             if(agregarAccesorio) {
-                texto += ` También incluí el accesorio adicional: ${productoActual.accNombre}.`;
+                mensaje += ` También me gustaría incluir el accesorio adicional: ${productoActual.accNombre}.`;
             }
-            texto += ` El total marcado es de $${total}.00. ¿Cómo gestionamos la entrega?`;
+            
+            let precioFinal = productoActual.precio + (agregarAccesorio ? productoActual.accPrecio : 0);
+            mensaje += ` El precio total marcado en la web es de $${precioFinal}.00. ¿Cómo podemos concretar la venta?`;
         }
-        document.getElementById("btn-enviar-wa").href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(texto)}`;
+        document.getElementById("btn-enviar-wa").href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
     }
 
     function toggleCatalogoVisual() {
@@ -446,7 +457,7 @@
         });
     }
 
-    function abrirWaDirecto() { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=Hola%20LocalSITEC%20necesito%20asistencia%20directa`, '_blank'); }
+    function abrirWaDirecto() { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=Hola%20LocalSITEC,%20necesito%20asistencia%20técnica`, '_blank'); }
     function reiniciarAsistente() { seleccion = { marca: '', categoria: '', especificacion: '' }; productoActual = null; avanzarAPaso(1); document.getElementById("vista-inicio").classList.remove("oculto"); document.getElementById("vista-asistente").classList.add("oculto"); }
 </script>
 </body>
