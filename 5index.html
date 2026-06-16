@@ -212,8 +212,8 @@
                 </div>
 
                 <div>
-                    <label>Ruta o Link de la Imagen</label>
-                    <input type="text" id="add-imgurl" class="admin-input" placeholder="Ej: img/productos/mi-foto.png o link">
+                    <label>URL de la Imagen (Link de internet)</label>
+                    <input type="text" id="add-imgurl" class="admin-input" placeholder="https://ejemplo.com/foto.jpg">
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -241,27 +241,25 @@
 </div>
 
 <script>
-    // URL de tu Google Apps Script
+    // URL DE TU CARTERO GOOGLE SCRIPT INYECTADA CORRECTAMENTE:
     const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbzw7Q5KCqHa7VCt6AdxsqkXQt5jktBBcbtKt6eK4piKHqzLir6TB6crEnCKZxmAnsxc/exec";
 
-    // 📂 IMÁGENES LOCALES DE LAS MARCAS (Guardadas en tu carpeta img/marcas/)
     const marcasConfig = {
-        "HP": "img/marcas/hp.png",
-        "Dell": "img/marcas/dell.png",
-        "Lenovo": "img/marcas/lenovo.png",
-        "ASUS": "img/marcas/asus.png",
-        "Acer": "img/marcas/acer.png",
-        "Apple": "img/marcas/apple.png",
-        "Toshiba": "img/marcas/toshiba.png",
-        "Samsung": "img/marcas/samsung.png"
+        "HP": "https://images.unsplash.com/photo-1589561084283-c307f993555c?w=400&auto=format&fit=crop&q=60",
+        "Dell": "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?w=400&auto=format&fit=crop&q=60",
+        "Lenovo": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&auto=format&fit=crop&q=60",
+        "ASUS": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&auto=format&fit=crop&q=60",
+        "Acer": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&auto=format&fit=crop&q=60",
+        "Apple": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=60",
+        "Toshiba": "https://images.unsplash.com/photo-1544006659-f0840bb74731?w=400&auto=format&fit=crop&q=60",
+        "Samsung": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&auto=format&fit=crop&q=60"
     };
 
-    // 📂 IMÁGENES LOCALES DE LAS CATEGORÍAS (Guardadas en tu carpeta img/categorias/)
     const imagenesPredeterminadas = {
-        "Cargador": "img/categorias/cargador.png",
-        "Batería": "img/categorias/bateria.png",
-        "Teclado": "img/categorias/teclado.png",
-        "Otros Accesorios": "img/categorias/otros.png"
+        "Cargador": "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400",
+        "Batería": "https://images.unsplash.com/photo-1594541818554-d33a7c6f5887?w=400",
+        "Teclado": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400",
+        "Otros Accesorios": "https://images.unsplash.com/photo-1631553127988-34758778a065?w=400"
     };
 
     let productosBase = [];
@@ -337,7 +335,7 @@
         const grid = document.getElementById("grid-especificaciones");
         grid.innerHTML = '';
         if(filtrados.length === 0) {
-            grid.innerHTML = `<div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)"><div class="opcion-img-wrapper" style="height:120px;"><img src="${imagenesPredeterminadas[seleccion.categoria] || 'img/categorias/otros.png'}"></div><span>Asistencia Personalizada</span></div>`;
+            grid.innerHTML = `<div class="opcion-card" style="grid-column:span 2" onclick="procesarFin(null)"><div class="opcion-img-wrapper" style="height:120px;"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400"></div><span>Asistencia Personalizada</span></div>`;
             return;
         }
         filtrados.forEach(p => {
@@ -385,7 +383,7 @@
         productosBase.forEach(p => {
             contenedor.innerHTML += `
                 <div class="item-admin-card">
-                    <img class="item-admin-thumb" src="${p.imgUrl}" alt="Thumb" onerror="this.src='img/categorias/otros.png'">
+                    <img class="item-admin-thumb" src="${p.imgUrl}" alt="Thumb">
                     <div class="item-admin-info">
                         <strong>[${p.marca}] ${p.categoria}</strong>
                         <p>${p.especificacion}</p>
@@ -411,10 +409,7 @@
         document.getElementById("add-marca").value = p.marca;
         document.getElementById("add-categoria").value = p.categoria;
         document.getElementById("add-spec").value = p.especificacion;
-        
-        // Mostrar la ruta de la imagen solo si no es una de las predeterminadas de categoría
-        document.getElementById("add-imgurl").value = (p.imgUrl === imagenesPredeterminadas[p.categoria]) ? "" : p.imgUrl;
-        
+        document.getElementById("add-imgurl").value = p.imgUrl.includes("images.unsplash.com") && p.imgUrl === imagenesPredeterminadas[p.categoria] ? "" : p.imgUrl;
         document.getElementById("add-precio").value = p.precio;
         document.getElementById("add-stock").value = p.stock;
 
