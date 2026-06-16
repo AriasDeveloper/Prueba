@@ -83,12 +83,8 @@
 
         .seccion-catalogo-discreto { border-top: 1px solid var(--borde); padding: 16px; text-align: center; background: rgba(11, 12, 14, 0.5); }
         .btn-toggle-catalogo { background: transparent; border: none; color: var(--texto-mutado); font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-        .lista-catalogo { max-height: 260px; overflow-y: auto; margin-top: 14px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
-        .item-catalogo { background: var(--bg-tarjeta); border: 1px solid var(--borde); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; gap: 10px; }
-        .item-catalogo-izq { flex: 1; min-width: 0; }
-        .item-catalogo-der { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .btn-catalogo-compra { background-color: rgba(34, 197, 94, 0.1); color: var(--verde-wa); border: 1px solid rgba(34, 197, 94, 0.2); padding: 6px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-catalogo-compra:hover { background-color: var(--verde-wa); color: #fff; }
+        .lista-catalogo { max-height: 220px; overflow-y: auto; margin-top: 14px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+        .item-catalogo { background: var(--bg-tarjeta); border: 1px solid var(--borde); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
         
         .loading-screen { text-align: center; padding: 50px; color: var(--oro-premium); font-weight: 500; font-size: 0.9rem; }
         .oculto { display: none !important; }
@@ -97,13 +93,11 @@
 <body>
 
 <div class="contenedor-app">
-    <!-- Pantalla de carga -->
     <div id="pantalla-carga" class="loading-screen">
         <span class="material-symbols-outlined" style="font-size: 30px; animation: spin 1.5s linear infinite; margin-bottom: 10px; display:inline-block;">sync</span>
         <p>Sincronizando con Google Cloud...</p>
     </div>
 
-    <!-- VISTA TIENDA -->
     <div id="vista-tienda" class="oculto">
         <header class="header">
             <div class="marca-info">
@@ -179,7 +173,6 @@
         </footer>
     </div>
 
-    <!-- VISTA ADMIN CON MODIFICADOR DE IMÁGENES -->
     <div id="vista-admin" class="oculto">
         <header class="header">
             <div class="marca-info">
@@ -378,30 +371,11 @@
         document.getElementById("btn-enviar-wa").href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
     }
 
-    function comprarDesdeCatalogoDirecto(marca, categoria, spec, precio) {
-        let mensaje = `Hola LocalSITEC, quiero adquirir directamente del catálogo: ${categoria} ${marca} [${spec}]. El precio es de $${precio}.00.`;
-        window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`, '_blank');
-    }
-
     function toggleCatalogoVisual() { document.getElementById("lista-catalogo-id").classList.toggle("oculto"); }
-    
     function generarCatalogoInferior() {
-        const lista = document.getElementById("lista-catalogo-id"); 
-        lista.innerHTML = '';
+        const lista = document.getElementById("lista-catalogo-id"); lista.innerHTML = '';
         productosBase.forEach(p => {
-            lista.innerHTML += `
-                <div class="item-catalogo">
-                    <div class="item-catalogo-izq">
-                        <strong>${p.marca} - ${p.categoria}</strong>
-                        <p style="color: var(--texto-mutado); font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.especificacion} (Stock: ${p.stock})</p>
-                    </div>
-                    <div class="item-catalogo-der">
-                        <span style="color: #fff; font-weight: 600;">$${p.precio}.00</span>
-                        <button class="btn-catalogo-compra" onclick="comprarDesdeCatalogoDirecto('${p.marca}', '${p.categoria}', '${p.especificacion}', '${p.precio}')" title="Comprar Directo">
-                            <span class="material-symbols-outlined" style="font-size: 16px;">shopping_cart</span>
-                        </button>
-                    </div>
-                </div>`;
+            lista.innerHTML += `<div class="item-catalogo"><div class="item-detalles"><strong>${p.marca} - ${p.categoria}</strong><p>${p.especificacion} (Stock: ${p.stock})</p></div><div class="item-precio">$${p.precio}.00</div></div>`;
         });
     }
 
@@ -438,6 +412,7 @@
         document.getElementById("add-categoria").value = p.categoria;
         document.getElementById("add-spec").value = p.especificacion;
         
+        // Mostrar la ruta de la imagen solo si no es una de las predeterminadas de categoría
         document.getElementById("add-imgurl").value = (p.imgUrl === imagenesPredeterminadas[p.categoria]) ? "" : p.imgUrl;
         
         document.getElementById("add-precio").value = p.precio;
